@@ -42,6 +42,7 @@ questionElement.innerText = 'DELL BOY';
 // console.log(questionElement)
 const answerButtons = document.getElementById('answer-buttons');
 const nextButton = document.getElementById('next-btn');
+console.log(nextButton)
 
 let currentQuestionIndex = 0;
 let score = 0;
@@ -59,7 +60,7 @@ function showQuestion() {
   let questionNo = currentQuestionIndex + 1;
   questionElement.innerText = questionNo + '. ' + currentQuestion.question;
   // console.log(questionElement.innerHTML)
-  console.log(currentQuestion.question);
+//   console.log(currentQuestion.question);
 
   currentQuestion.answers.forEach((answer) => {
     const button = document.createElement('button');
@@ -88,6 +89,13 @@ function selectAnswer(e){
     } else {
         selectedBtn.classList.add("incorrect");
     }
+    Array.from(answerButtons.children).forEach(button => {
+        if(button.dataset.correct === "true"){
+            button.classList.add("correct");
+        }
+        button.disabled = true;
+    });
+    nextButton.style.display = "block";
 }
 
 startQuiz();
