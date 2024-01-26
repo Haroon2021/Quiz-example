@@ -22,8 +22,8 @@ const questions = [
     answers: [
       { text: 'Kalihari', correct: false },
       { text: 'Gobi', correct: false },
-      { text: 'Sahara', correct: true },
-      { text: 'Antartica', correct: false },
+      { text: 'Sahara', correct: false },
+      { text: 'Antartica', correct: true },
     ],
   },
   {
@@ -42,7 +42,7 @@ questionElement.innerText = 'DELL BOY';
 // console.log(questionElement)
 const answerButtons = document.getElementById('answer-buttons');
 const nextButton = document.getElementById('next-btn');
-console.log(nextButton)
+console.log(nextButton);
 
 let currentQuestionIndex = 0;
 let score = 0;
@@ -60,17 +60,17 @@ function showQuestion() {
   let questionNo = currentQuestionIndex + 1;
   questionElement.innerText = questionNo + '. ' + currentQuestion.question;
   // console.log(questionElement.innerHTML)
-//   console.log(currentQuestion.question);
+  //   console.log(currentQuestion.question);
 
   currentQuestion.answers.forEach((answer) => {
     const button = document.createElement('button');
     button.innerText = answer.text;
     button.classList.add('btn');
     answerButtons.appendChild(button);
-    if(answer.correct){
-        button.dataset.correct = answer.correct;
+    if (answer.correct) {
+      button.dataset.correct = answer.correct;
     }
-    button.addEventListener("click", selectAnswer)
+    button.addEventListener('click', selectAnswer);
   });
 }
 
@@ -81,22 +81,47 @@ function resetState() {
   }
 }
 
-function selectAnswer(e){
-    const selectedBtn = e.target;
-    const isCorrect = selectedBtn.dataset.correct === "true";
-    if(isCorrect) {
-        selectedBtn.classList.add("correct");
-    } else {
-        selectedBtn.classList.add("incorrect");
+function selectAnswer(e) {
+  const selectedBtn = e.target;
+  const isCorrect = selectedBtn.dataset.correct === 'true';
+  if (isCorrect) {
+    selectedBtn.classList.add('correct');
+    score++;
+  } else {
+    selectedBtn.classList.add('incorrect');
+  }
+  Array.from(answerButtons.children).forEach((button) => {
+    if (button.dataset.correct === 'true') {
+      button.classList.add('correct');
     }
-    Array.from(answerButtons.children).forEach(button => {
-        if(button.dataset.correct === "true"){
-            button.classList.add("correct");
-        }
-        button.disabled = true;
-    });
+    button.disabled = true;
+  });
+  nextButton.style.display = 'block';
+}
+
+function showScore() {
+    resetState();
+    questionElement.innerHTML = `You scored ${score} out of ${questions.length}!`;
+    nextButton.innerHTML = "Play Again";
     nextButton.style.display = "block";
 }
+
+function handleNextButton() {
+  currentQuestionIndex++;
+  if (currentQuestionIndex < questions.length) {
+    showQuestion();
+  } else {
+    showScore();
+  }
+}
+
+nextButton.addEventListener('click', () => {
+  if (currentQuestionIndex < questions.length) {
+    handleNextButton();
+  } else {
+    startQuiz();
+  }
+});
 
 startQuiz();
 console.log('!!!!!!');
