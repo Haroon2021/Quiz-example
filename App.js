@@ -12,7 +12,7 @@ const questions = [
     question: 'Which is the smallest city in the world?',
     answers: [
       { text: 'Vatican City', correct: true },
-      { text: 'Bhutan', correct: true },
+      { text: 'Bhutan', correct: false },
       { text: 'Nepal', correct: false },
       { text: 'London', correct: false },
     ],
@@ -38,11 +38,9 @@ const questions = [
 ];
 
 const questionElement = document.getElementById('question');
-questionElement.innerText = 'DELL BOY';
-// console.log(questionElement)
+// questionElement.innerText = 'DELL BOY';
 const answerButtons = document.getElementById('answer-buttons');
 const nextButton = document.getElementById('next-btn');
-console.log(nextButton);
 
 let currentQuestionIndex = 0;
 let score = 0;
@@ -59,8 +57,6 @@ function showQuestion() {
   let currentQuestion = questions[currentQuestionIndex];
   let questionNo = currentQuestionIndex + 1;
   questionElement.innerText = questionNo + '. ' + currentQuestion.question;
-  // console.log(questionElement.innerHTML)
-  //   console.log(currentQuestion.question);
 
   currentQuestion.answers.forEach((answer) => {
     const button = document.createElement('button');
@@ -124,4 +120,3 @@ nextButton.addEventListener('click', () => {
 });
 
 startQuiz();
-console.log('!!!!!!');
